@@ -16,12 +16,15 @@ export async function onRequest(context) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Turnstile Demo</title>
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+        <script>
+            function onSuccess() {
+                document.getElementById('turnstile-form').submit();
+            }
+        </script>
     </head>
     <body>
-        <form action="/" method="POST">
-            <div class="cf-turnstile" data-sitekey="${SITE_KEY}" data-theme="light"></div>
-            <br>
-            <button type="submit">Submit</button>
+        <form id="turnstile-form" action="/" method="POST">
+            <div class="cf-turnstile" data-sitekey="${SITE_KEY}" data-callback="onSuccess" data-theme="light"></div>
         </form>
     </body>
     </html>
