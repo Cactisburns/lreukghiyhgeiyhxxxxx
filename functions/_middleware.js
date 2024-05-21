@@ -1,3 +1,5 @@
+import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
+
 export async function onRequest(context) {
     const { request, env } = context;
 
@@ -58,9 +60,5 @@ async function handlePost(request, env) {
     }
 
     // Successfully validated the Turnstile token, serve the index.html content
-    const htmlContent = await fetch(new URL('/index.html', request.url));
-
-    return new Response(htmlContent.body, {
-        headers: { 'Content-Type': 'text/html' },
-    });
+    return getAssetFromKV(context, new Request(new URL('/index.html', request.url), request));
 }
